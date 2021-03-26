@@ -1,45 +1,59 @@
 package com.kamil.iregular_verbs;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class VerbTest {
+	
+	Verb exampleVerb;
+	
+	@BeforeEach
+	void setUp() {
+		this.exampleVerb = new Verb("brać", "take", "took", "taken");
+	}
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
+		// given
+		String expectedToString = "take -- took -- taken || brać";
+		// when
+		String verbToString = exampleVerb.toString();
+		// then
+		assertEquals(expectedToString, verbToString);
 	}
 
 	@Test
 	void testToStringByTranslation() {
-		fail("Not yet implemented");
+		// given
+		String expectedToString = "brać || take -- took -- taken";
+		// when
+		String verbToString = exampleVerb.toStringByTranslation();
+		// then
+		assertEquals(expectedToString, verbToString);
 	}
 
 	@Test
 	void shouldMarkTwoVerbsAsEqualIfInfinitiveIsEqual() {
-		//given
-		Verb verb1 = new Verb("brać", "take", "took", "taken");
-		Verb verb2 = new Verb("wziąć", "take", "test", "test2");
-		//when
-		int comparingResult = verb1.compareTo(verb2);
-		//then
+		// given
+		Verb verbToCompare = new Verb("wziąć", "take", "test", "test2");
+		// when
+		int comparingResult = exampleVerb.compareTo(verbToCompare);
+		// then
 		assertThat(comparingResult, equalTo(0));
 	}
-	
+
 	@Test
 	void shouldNotMarkTwoVerbsAsEqualWhenInfinitiveIsDifferent() {
-		//given
-		Verb verb1 = new Verb("brać", "take", "took", "taken");
-		Verb verb2 = new Verb("czytać", "read", "read", "read");
-		//when
-		int comparingResult = verb1.compareTo(verb2);
-		//then
+		// given
+		Verb verbToCompare = new Verb("czytać", "read", "read", "read");
+		// when
+		int comparingResult = exampleVerb.compareTo(verbToCompare);
+		// then
 		assertThat(comparingResult, not(equalTo(0)));
-
 	}
-
 }
