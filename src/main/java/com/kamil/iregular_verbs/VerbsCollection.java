@@ -1,6 +1,5 @@
 package com.kamil.iregular_verbs;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -19,8 +18,8 @@ public class VerbsCollection {
 	
 	public Collection<Verb> getAllVerbsSortedByTranslation() {
 		return this.verbsCollection.stream()
-				.sorted( (v1, v2) -> v1.getTranslation().compareTo(v2.getTranslation()))
-				.collect(Collectors.toCollection(ArrayList::new));
+				.collect(Collectors.toCollection( () -> new TreeSet<Verb>(( verb1, verb2) -> 
+				verb1.getTranslation().compareTo(verb2.getTranslation()))));
 	}
 	
 	public boolean addVerb(Verb verb) {
