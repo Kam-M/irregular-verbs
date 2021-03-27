@@ -13,12 +13,12 @@ public class DaoDBImpl implements Dao{
 
 	private Connection conn;
 	
-	private static final String DB_NAME = "verbs";
-	public static final String SOURCE_PATH = "jdbc:sqlite:" + new File("").getAbsolutePath() + File.separator;
-	public static final String CONNECTION_STRING = SOURCE_PATH + DB_NAME;
+	private static final String DB_NAME = "verbs.db";
+	private static final String SOURCE_PATH = "jdbc:sqlite:" + new File("").getAbsolutePath() + File.separator;
+	private static final String CONNECTION_STRING = SOURCE_PATH + DB_NAME;
 	private static final String TABLE_NAME = "verbs";
 	
-	void openDatabase() {
+	private void openDatabase() {
 		try {
 			conn = DriverManager.getConnection(CONNECTION_STRING);
 		} catch (SQLException e) {
@@ -27,8 +27,20 @@ public class DaoDBImpl implements Dao{
 		}
 	}
 	
+	private void closeDatabase() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Cannot properly close database connection");
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public Set<Verb> getVerbsFromSource() {
+		
+		openDatabase();
+		
 		Set<Verb> verbsCollections = new TreeSet<Verb>();
 		
 		try (Statement statement = conn.createStatement()){
@@ -39,9 +51,13 @@ public class DaoDBImpl implements Dao{
 				String pastTense = resultSet.getString("pastTense");
 				String pastParticiple = resultSet.getString("pastParticiple");
 				String translation = resultSet.getString("translation");
-				int isLearnt = resultSet.getInt("isLearnt");
+				
+				boolean isVerbLearnt = false;
+					if(resultSet.getInt("isLearnt") == 1) {
+						isVerbLearnt = true;
+					}
  
-				Verb verb = new Verb(infinitive, pastTense, pastParticiple, translation, isLearnt);
+				Verb verb = new Verb(infinitive, pastTense, pastParticiple, translation, isVerbLearnt);
 				verbsCollections.add(verb);
 			}
 		} catch (SQLException e) {
@@ -52,8 +68,7 @@ public class DaoDBImpl implements Dao{
 
 	@Override
 	public void saveVerbsToSource(Set<Verb> verbsCollection) {
-		// TODO Auto-generated method stub
-		
+		closeDatabase();
 	}
 
 

@@ -6,9 +6,9 @@ public class Verb implements Comparable<Verb> {
 	private String pastTense;
 	private String pastParticiple;
 	private String translation;
-	private int isLearnt;
+	private boolean isLearnt;
 
-	public Verb(String infinitive, String pastTense, String pastParticiple, String translation, int isLearnt) {
+	public Verb(String infinitive, String pastTense, String pastParticiple, String translation, boolean isLearnt) {
 		this.infinitive = infinitive;
 		this.pastTense = pastTense;
 		this.pastParticiple = pastParticiple;
@@ -30,6 +30,14 @@ public class Verb implements Comparable<Verb> {
 
 	public String getPastParticiple() {
 		return pastParticiple;
+	}
+	
+	public boolean isLearnt() {
+		return isLearnt;
+	}
+
+	public void setLearnt(boolean isLearnt) {
+		this.isLearnt = isLearnt;
 	}
 	
 	@Override
