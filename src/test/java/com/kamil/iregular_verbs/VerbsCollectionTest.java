@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -88,7 +89,7 @@ class VerbsCollectionTest {
 		verbsCollection.addVerb(verb2);
 		verbsCollection.addVerb(verb3);
 		// when
-		Collection<Verb> collectionOfVerbs = verbsCollection.getAllVerbsSortedByTranslation();
+		Set<Verb> collectionOfVerbs = verbsCollection.getAllVerbsSortedByTranslation();
 		var collectionToArray = collectionOfVerbs.toArray();
 		// then
 		assertEquals(3, collectionOfVerbs.size());

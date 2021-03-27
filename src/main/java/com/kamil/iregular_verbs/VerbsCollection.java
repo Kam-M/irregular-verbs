@@ -1,22 +1,22 @@
 package com.kamil.iregular_verbs;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class VerbsCollection {
 	
-	Collection<Verb> verbsCollection;
+	Set<Verb> verbsCollection;
 	
 	public VerbsCollection() {
 		this.verbsCollection = new TreeSet<Verb>();
 	}
 	
-	public Collection<Verb> getAllVerbsSortedByInfinitive() {
+	public Set<Verb> getAllVerbsSortedByInfinitive() {
 		return this.verbsCollection;
 	}
 	
-	public Collection<Verb> getAllVerbsSortedByTranslation() {
+	public Set<Verb> getAllVerbsSortedByTranslation() {
 		return this.verbsCollection.stream()
 				.collect(Collectors.toCollection( () -> new TreeSet<Verb>(( verb1, verb2) -> 
 				verb1.getTranslation().compareTo(verb2.getTranslation()))));
