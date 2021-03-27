@@ -14,7 +14,7 @@ class VerbTest {
 	
 	@BeforeEach
 	void setUp() {
-		this.exampleVerb = new Verb("brać", "take", "took", "taken");
+		this.exampleVerb = new Verb("brać", "take", "took", "taken", 0);
 	}
 
 	@Test
@@ -40,7 +40,7 @@ class VerbTest {
 	@Test
 	void shouldMarkTwoVerbsAsEqualIfInfinitiveIsEqual() {
 		// given
-		Verb verbToCompare = new Verb("wziąć", "take", "test", "test2");
+		Verb verbToCompare = new Verb("wziąć", "take", "test", "test2", 0);
 		// when
 		int comparingResult = exampleVerb.compareTo(verbToCompare);
 		// then
@@ -50,7 +50,7 @@ class VerbTest {
 	@Test
 	void shouldNotMarkTwoVerbsAsEqualWhenInfinitiveIsDifferent() {
 		// given
-		Verb verbToCompare = new Verb("czytać", "read", "read", "read");
+		Verb verbToCompare = new Verb("czytać", "read", "read", "read", 0);
 		// when
 		int comparingResult = exampleVerb.compareTo(verbToCompare);
 		// then

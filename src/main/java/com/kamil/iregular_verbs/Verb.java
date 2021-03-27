@@ -2,16 +2,18 @@ package com.kamil.iregular_verbs;
 
 public class Verb implements Comparable<Verb> {
 	
-	private String translation;
 	private String infinitive;
 	private String pastTense;
 	private String pastParticiple;
+	private String translation;
+	private int isLearnt;
 
-	public Verb(String translation, String infinitive, String pastTense, String pastParticiple) {
+	public Verb(String infinitive, String pastTense, String pastParticiple, String translation, int isLearnt) {
 		this.infinitive = infinitive;
-		this.translation = translation;
 		this.pastTense = pastTense;
 		this.pastParticiple = pastParticiple;
+		this.translation = translation;
+		this.isLearnt = isLearnt;
 	}
 
 	public String getTranslation() {
