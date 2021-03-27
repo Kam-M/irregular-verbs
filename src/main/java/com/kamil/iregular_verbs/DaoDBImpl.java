@@ -69,6 +69,9 @@ public class DaoDBImpl implements Dao{
 
 	@Override
 	public void saveVerbsToSource(Set<Verb> verbsCollection) {
+		
+		
+		
 		closeDatabase();
 	}
 

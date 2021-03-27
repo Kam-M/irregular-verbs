@@ -42,11 +42,11 @@ public class Verb implements Comparable<Verb> {
 	
 	@Override
 	public String toString() {
-		return infinitive + " -- " + pastTense + " -- " + pastParticiple + " || " + translation;
+		return this.infinitive + " -- " + pastTense + " -- " + pastParticiple + " || " + translation;
 	}
 
 	public String toStringByTranslation() {
-		return translation + " || " + infinitive + " -- " + pastTense + " -- " + pastParticiple;
+		return this.translation + " || " + infinitive + " -- " + pastTense + " -- " + pastParticiple;
 
 	}
 

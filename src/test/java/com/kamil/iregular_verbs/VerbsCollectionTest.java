@@ -59,9 +59,9 @@ class VerbsCollectionTest {
 	@Test
 	void shouldReturnAllVerbsFromCollectionSortedByInfinitive() {
 		// given
-		Verb verb1 = new Verb("brać", "take", "took", "taken", false);
-		Verb verb2 = new Verb("czytać", "read", "read", "read", false);
-		Verb verb3 = new Verb("dzwonić", "ring", "rang", "rung", false);
+		Verb verb1 = new Verb("take", "took", "take", "brać", false);
+		Verb verb2 = new Verb("read", "read", "read", "czytać", false);
+		Verb verb3 = new Verb("ring", "rang", "rung", "dzwonić", false);
 
 		VerbsCollection verbsCollection = new VerbsCollection();
 
@@ -79,9 +79,9 @@ class VerbsCollectionTest {
 	@Test
 	void shouldReturnAllVerbsFromCollectionSortedByTranslation() {
 		// given
-		Verb verb1 = new Verb("brać", "take", "took", "taken", false);
-		Verb verb2 = new Verb("czytać", "read", "read", "read", false);
-		Verb verb3 = new Verb("dzwonić", "ring", "rang", "rung", false);
+		Verb verb1 = new Verb("take", "took", "take", "brać", false);
+		Verb verb2 = new Verb("read", "read", "read", "czytać", false);
+		Verb verb3 = new Verb("ring", "rang", "rung", "dzwonić", false);
 
 		VerbsCollection verbsCollection = new VerbsCollection();
 
