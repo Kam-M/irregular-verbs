@@ -4,12 +4,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class CollectionManager {
-	
+
 	private VerbsCollection mainCollection;
 	private VerbsCollection learntCollection;
-	
+
 	private Dao dao;
-	
+
 	public CollectionManager(Dao dao) {
 		this.dao = dao;
 		this.mainCollection = new VerbsCollection();
@@ -23,47 +23,50 @@ public class CollectionManager {
 	public VerbsCollection getLearntCollection() {
 		return learntCollection;
 	}
-	
+
 	public boolean addVerbToMainCollection(Verb verb) {
-		if(verb != null) {
+		if (verb != null) {
 			return this.mainCollection.addVerb(verb);
-		}else {
+		} else {
 			return false;
 		}
 	}
 
 	public void splitVerbsIntoProperCollections() {
-		
+
 		Set<Verb> verbsFromSource = dao.getVerbsFromSource();
-		
-		for(Verb verb : verbsFromSource) {
-			if(verb.isLearnt()) {
+
+		for (Verb verb : verbsFromSource) {
+			if (verb.isLearnt()) {
 				learntCollection.addVerb(verb);
-			}else {
+			} else {
 				mainCollection.addVerb(verb);
 			}
 		}
 	}
 
-	public Set<Verb> gatherVerbsIntoOne() {
+	public Set<Verb> gatherAllVerbsIntoOneCollection() {
 		Set<Verb> allVerbsIntoOne = new TreeSet<>();
-		
+
 		allVerbsIntoOne.addAll(this.mainCollection.getAllVerbsSortedByInfinitive());
 		allVerbsIntoOne.addAll(this.learntCollection.getAllVerbsSortedByInfinitive());
-		
+
 		return allVerbsIntoOne;
 	}
 
 	public boolean moveVerbFromMainToLearnt(Verb verb) {
+		if (verb == null) {
+			return false;
+		}
+		
 		boolean wasRemovedFromMain = this.mainCollection.removeVerb(verb);
 		boolean wasAddedToLearnt = this.learntCollection.addVerb(verb);
-			if(wasRemovedFromMain && wasAddedToLearnt) {
-				return true;
-			}else {
-				return false;
-			}
-	}
 
-	
+		if (wasRemovedFromMain && wasAddedToLearnt) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

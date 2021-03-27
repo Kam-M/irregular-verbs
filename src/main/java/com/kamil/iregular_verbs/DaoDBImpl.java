@@ -3,6 +3,7 @@ package com.kamil.iregular_verbs;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,15 +65,48 @@ public class DaoDBImpl implements Dao{
 			System.out.println("Failure while reading data from database...");
 			e.printStackTrace();
 		}
+	//	closeDatabase();
 		return verbsCollections;
 	}
 
 	@Override
-	public void saveVerbsToSource(Set<Verb> verbsCollection) {
+	public void saveVerbsToSource(Set<Verb> allVerbs) {
+		
+		openDatabase();
+		
+		Set<Verb> originalCollectionFromDB = getVerbsFromSource();
+		
+		allVerbs.removeAll(originalCollectionFromDB);
+		
+		addNewVerbsToDB(allVerbs);
 		
 		
 		
-		closeDatabase();
+	//	closeDatabase();
+	}
+
+	private void addNewVerbsToDB(Set<Verb> newVerbs) {
+		openDatabase();
+		try (PreparedStatement statement = conn.prepareStatement("INSERT INTO " + DB_NAME + " VALUES (?, ?, ?, ?, ?)")){
+			for(Verb verb : newVerbs) {
+				
+				int wasVerbMarkedAsLearnt = 0;
+				if(verb.isLearnt()) {
+					wasVerbMarkedAsLearnt = 1;
+				}
+				
+				statement.setString(1, verb.getInfinitive());
+				statement.setString(2, verb.getPastTense());
+				statement.setString(3, verb.getPastParticiple());
+				statement.setString(4, verb.getTranslation());
+				statement.setInt(5, wasVerbMarkedAsLearnt);
+				
+				statement.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 

@@ -1,16 +1,24 @@
 package com.kamil.iregular_verbs;
 
+import java.util.Set;
+
 public class Main {
 
 	public static void main(String[] args) {
 		
 		DaoDBImpl dao = new DaoDBImpl();
 			
-		var set = dao.getVerbsFromSource();
+		CollectionManager manager = new CollectionManager(dao);
+		
+		manager.splitVerbsIntoProperCollections();
+		
+		Set<Verb> set = manager.getMainCollection().getAllVerbsSortedByInfinitive();
+		
+		manager.addVerbToMainCollection(new Verb("ggg", "g", "ff", "gg", false));
 		
 		set.forEach(System.out::println);
 		
-		dao.saveVerbsToSource(null);
+		dao.saveVerbsToSource(manager.gatherAllVerbsIntoOneCollection());
 
 	}
 

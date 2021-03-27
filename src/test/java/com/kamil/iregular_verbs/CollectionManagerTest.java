@@ -82,7 +82,7 @@ class CollectionManagerTest {
 		manager.splitVerbsIntoProperCollections();
 
 		// when
-		Set<Verb> allVerbsIntoOne = manager.gatherVerbsIntoOne();
+		Set<Verb> allVerbsIntoOne = manager.gatherAllVerbsIntoOneCollection();
 
 		// then
 		assertThat(allVerbsIntoOne.size(), equalTo(3));
@@ -105,6 +105,7 @@ class CollectionManagerTest {
 
 		//when
 		boolean wasVerbMoved = manager.moveVerbFromMainToLearnt(verb2);
+		
 		//then
 		assertTrue(wasVerbMoved);
 		assertThat(manager.getMainCollection().getAllVerbsSortedByInfinitive(), hasSize(2));
