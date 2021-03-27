@@ -16,7 +16,7 @@ class VerbsCollectionTest {
 	@Test
 	void shouldAddGivenVerbToCollection() {
 		// given
-		Verb verb = new Verb("brać", "take", "took", "taken", 0);
+		Verb verb = new Verb("brać", "take", "took", "taken", false);
 		VerbsCollection verbsCollection = new VerbsCollection();
 		// when
 		boolean wasAddedToCollection = verbsCollection.addVerb(verb);
@@ -28,7 +28,7 @@ class VerbsCollectionTest {
 	@Test
 	void shouldRemoveGivenVerbFromCollection() {
 		// given
-		Verb verb = new Verb("brać", "take", "took", "taken", 0);
+		Verb verb = new Verb("brać", "take", "took", "taken", false);
 		VerbsCollection verbsCollection = new VerbsCollection();
 		verbsCollection.addVerb(verb);
 		// when
@@ -41,8 +41,8 @@ class VerbsCollectionTest {
 	@Test
 	void shouldDoNothingWhenAskedForRemoveVerbNotPresentInCollection() {
 		// given
-		Verb verb = new Verb("brać", "take", "took", "taken", 0);
-		Verb verb2 = new Verb("czytać", "read", "read", "read", 0);
+		Verb verb = new Verb("brać", "take", "took", "taken", false);
+		Verb verb2 = new Verb("czytać", "read", "read", "read", false);
 
 		VerbsCollection verbsCollection = new VerbsCollection();
 		verbsCollection.addVerb(verb);
@@ -59,9 +59,9 @@ class VerbsCollectionTest {
 	@Test
 	void shouldReturnAllVerbsFromCollectionSortedByInfinitive() {
 		// given
-		Verb verb1 = new Verb("brać", "take", "took", "taken", 0);
-		Verb verb2 = new Verb("czytać", "read", "read", "read", 0);
-		Verb verb3 = new Verb("dzwonić", "ring", "rang", "rung", 0);
+		Verb verb1 = new Verb("brać", "take", "took", "taken", false);
+		Verb verb2 = new Verb("czytać", "read", "read", "read", false);
+		Verb verb3 = new Verb("dzwonić", "ring", "rang", "rung", false);
 
 		VerbsCollection verbsCollection = new VerbsCollection();
 
@@ -79,9 +79,9 @@ class VerbsCollectionTest {
 	@Test
 	void shouldReturnAllVerbsFromCollectionSortedByTranslation() {
 		// given
-		Verb verb1 = new Verb("brać", "take", "took", "taken", 0);
-		Verb verb2 = new Verb("czytać", "read", "read", "read", 0);
-		Verb verb3 = new Verb("dzwonić", "ring", "rang", "rung", 0);
+		Verb verb1 = new Verb("brać", "take", "took", "taken", false);
+		Verb verb2 = new Verb("czytać", "read", "read", "read", false);
+		Verb verb3 = new Verb("dzwonić", "ring", "rang", "rung", false);
 
 		VerbsCollection verbsCollection = new VerbsCollection();
 

@@ -41,7 +41,7 @@ public class DaoDBImpl implements Dao{
 		
 		openDatabase();
 		
-		Set<Verb> verbsCollections = new TreeSet<Verb>();
+		Set<Verb> verbsCollections = new TreeSet<>();
 		
 		try (Statement statement = conn.createStatement()){
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM " + TABLE_NAME);
@@ -61,6 +61,7 @@ public class DaoDBImpl implements Dao{
 				verbsCollections.add(verb);
 			}
 		} catch (SQLException e) {
+			System.out.println("Failure while reading data from database...");
 			e.printStackTrace();
 		}
 		return verbsCollections;
