@@ -82,6 +82,7 @@ public class DaoDBImpl implements Dao {
 		addNewVerbsToDB(allVerbsAfterUserChanges);
 
 		closeDatabase();
+		
 	}
 
 	private void addNewVerbsToDB(Set<Verb> allVerbsAfterUserChanges) {
