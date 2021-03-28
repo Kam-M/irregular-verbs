@@ -81,6 +81,8 @@ public class DaoDBImpl implements Dao {
 
 		addNewVerbsToDB(allVerbsAfterUserChanges);
 
+		updateVerbsInDB(allVerbsAfterUserChanges);
+		
 		closeDatabase();
 		
 	}
@@ -118,6 +120,33 @@ public class DaoDBImpl implements Dao {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private void updateVerbsInDB(Set<Verb> allVerbsAfterUserChanges) {
+		try (PreparedStatement statement = conn
+				.prepareStatement("UPDATE " + TABLE_NAME + " SET isLearnt = ? WHERE infinitive = ?")) {
+
+			for (Verb verb : allVerbsAfterUserChanges) {
+
+				
+				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark as
+				// learnt or unlearned
+				int learntStatusInDB = 0;
+				
+				if(verb.isLearnt() == true) {
+					learntStatusInDB = 1;
+				}
+
+				statement.setInt(1, learntStatusInDB); 
+				statement.setString(2, verb.getInfinitive());
+
+				statement.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

@@ -9,8 +9,10 @@
 *.nar
 hs_err_pid*
 
+######## Maven
 /target/
 
+####### SQLite
 verbs.db-journal*
 
 ## Eclipse
