@@ -12,13 +12,15 @@ public class Main {
 		
 		manager.splitVerbsIntoProperCollections();
 		
-		Set<Verb> set = manager.getMainCollection().getAllVerbsSortedByInfinitive();
+		var main = manager.getMainCollection().getAllVerbsSortedByInfinitive();
+		main.forEach(System.out::println);
 		
-		manager.addVerbToMainCollection(new Verb("ggg", "g", "ff", "gg", false));
 		
-		set.forEach(System.out::println);
-		
-		dao.saveVerbsToSource(manager.gatherAllVerbsIntoOneCollection());
+//		Verb verb = new Verb("ffF", "ffF", "ffF", "ffF", false);
+//		manager.addVerbToMainCollection(verb);
+//	
+//		dao.saveVerbsToSource(manager.gatherAllVerbsIntoOneCollection());
+
 
 	}
 
