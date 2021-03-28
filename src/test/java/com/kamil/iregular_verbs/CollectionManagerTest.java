@@ -54,7 +54,7 @@ class CollectionManagerTest {
 
 		given(dao.getVerbsFromSource()).willReturn(testVerbs);
 		// when
-		manager.splitVerbsIntoProperCollections();
+		manager.populateCollections();
 
 		// then
 		verify(dao).getVerbsFromSource();
@@ -81,7 +81,7 @@ class CollectionManagerTest {
 		testVerbs.add(verb3);
 
 		given(dao.getVerbsFromSource()).willReturn(testVerbs);
-		manager.splitVerbsIntoProperCollections();
+		manager.populateCollections();
 
 		// when
 		Set<Verb> allVerbsIntoOne = manager.gatherAllVerbsIntoOneCollection();

@@ -32,7 +32,7 @@ public class CollectionManager {
 		}
 	}
 
-	public void splitVerbsIntoProperCollections() {
+	public void populateCollections() {
 
 		Set<Verb> verbsFromSource = dao.getVerbsFromSource();
 
@@ -44,8 +44,12 @@ public class CollectionManager {
 			}
 		}
 	}
+	
+	public void saveCollections() {
+		this.dao.saveVerbsToSource(gatherAllVerbsIntoOneCollection());
+	}
 
-	public Set<Verb> gatherAllVerbsIntoOneCollection() {
+	Set<Verb> gatherAllVerbsIntoOneCollection() {
 		Set<Verb> allVerbsIntoOne = new TreeSet<>();
 
 		allVerbsIntoOne.addAll(this.mainCollection.getAllVerbsSortedByInfinitive());

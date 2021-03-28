@@ -14,28 +14,51 @@ public class DaoDBImpl implements Dao {
 
 	private Connection conn;
 
-	private static final String DB_NAME = "verbs.db";
-	private static final String SOURCE_PATH = "jdbc:sqlite:" + new File("").getAbsolutePath() + File.separator;
-	private static final String CONNECTION_STRING = SOURCE_PATH + DB_NAME;
-	private static final String TABLE_NAME = "verbs";
+	private String dbName = "verbs.db";
+	private final String SOURCE_PATH = "jdbc:sqlite:" + new File("").getAbsolutePath() + File.separator;
+	private final String CONNECTION_STRING = SOURCE_PATH + dbName;
+	private String tableName = "verbs";
 
 	private Set<Verb> verbsCollectionsFromDB = new TreeSet<>();
 
-	private void openDatabase() {
-		try {
-			conn = DriverManager.getConnection(CONNECTION_STRING);
-		} catch (SQLException e) {
-			System.out.println("Cannot connect to database.");
-			e.printStackTrace();
+	
+	Connection getConn() {
+		return conn;
+	}
+
+	String getDBName() {
+		return this.dbName;
+	}
+
+	void setDBName(String dbName) {
+		this.dbName = dbName;
+	}
+	
+	String getTableName() {
+		return this.tableName;
+	}
+	
+	
+
+	void openDatabase() {
+		if (conn == null) {
+			try {
+				conn = DriverManager.getConnection(CONNECTION_STRING);
+			} catch (SQLException e) {
+				System.out.println("Cannot connect to database.");
+				e.printStackTrace();
+			}
 		}
 	}
 
-	private void closeDatabase() {
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			System.out.println("Cannot properly close database connection");
-			e.printStackTrace();
+	void closeDatabase() {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				System.out.println("Cannot properly close database connection");
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -45,7 +68,7 @@ public class DaoDBImpl implements Dao {
 		openDatabase();
 
 		try (Statement statement = conn.createStatement()) {
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM " + TABLE_NAME);
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName);
 
 			while (resultSet.next()) {
 				String infinitive = resultSet.getString("infinitive");
@@ -54,8 +77,8 @@ public class DaoDBImpl implements Dao {
 				String translation = resultSet.getString("translation");
 				boolean isVerbLearnt = false;
 
-				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark as
-				// learnt or unlearned
+				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark
+				// learned status
 				if (resultSet.getInt("isLearnt") == 1) {
 					isVerbLearnt = true;
 				}
@@ -82,12 +105,12 @@ public class DaoDBImpl implements Dao {
 		addNewVerbsToDB(allVerbsAfterUserChanges);
 
 		updateVerbsInDB(allVerbsAfterUserChanges);
-		
+
 		closeDatabase();
-		
+
 	}
 
-	private void addNewVerbsToDB(Set<Verb> allVerbsAfterUserChanges) {
+	void addNewVerbsToDB(Set<Verb> allVerbsAfterUserChanges) {
 
 		allVerbsAfterUserChanges.removeAll(verbsCollectionsFromDB);
 
@@ -96,12 +119,12 @@ public class DaoDBImpl implements Dao {
 		}
 
 		try (PreparedStatement statement = conn
-				.prepareStatement("INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?)")) {
+				.prepareStatement("INSERT INTO " + tableName + " VALUES (?, ?, ?, ?, ?)")) {
 
 			for (Verb verb : allVerbsAfterUserChanges) {
 
-				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark as
-				// learnt or unlearned
+				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark
+				// learned status
 				int wasVerbMarkedAsLearnt = 0;
 				if (verb.isLearnt()) {
 					wasVerbMarkedAsLearnt = 1;
@@ -121,23 +144,22 @@ public class DaoDBImpl implements Dao {
 		}
 
 	}
-	
-	private void updateVerbsInDB(Set<Verb> allVerbsAfterUserChanges) {
+
+	void updateVerbsInDB(Set<Verb> allVerbsAfterUserChanges) {
 		try (PreparedStatement statement = conn
-				.prepareStatement("UPDATE " + TABLE_NAME + " SET isLearnt = ? WHERE infinitive = ?")) {
+				.prepareStatement("UPDATE " + tableName + " SET isLearnt = ? WHERE infinitive = ?")) {
 
 			for (Verb verb : allVerbsAfterUserChanges) {
 
-				
-				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark as
-				// learnt or unlearned
+				// SQLite do not use boolean values so in DB we use 0 and 1 values to mark
+				// learned status
 				int learntStatusInDB = 0;
-				
-				if(verb.isLearnt() == true) {
+
+				if (verb.isLearnt() == true) {
 					learntStatusInDB = 1;
 				}
 
-				statement.setInt(1, learntStatusInDB); 
+				statement.setInt(1, learntStatusInDB);
 				statement.setString(2, verb.getInfinitive());
 
 				statement.executeUpdate();
@@ -146,7 +168,7 @@ public class DaoDBImpl implements Dao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
