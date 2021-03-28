@@ -69,4 +69,8 @@ public class CollectionManager {
 		}
 	}
 
+	public boolean removeVerbFromMainCollection(Verb verb) {
+		return this.mainCollection.removeVerb(verb);
+	}
+
 }

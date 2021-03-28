@@ -2,9 +2,11 @@ package com.kamil.iregular_verbs;
 
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.MatcherAssert.*;
@@ -112,4 +114,24 @@ class CollectionManagerTest {
 		assertThat(manager.getLearntCollection().getAllVerbsSortedByInfinitive(), hasSize(1));
 	}
 
+	
+	@Test
+	void shouldRemoveGivenVerbFromMainCollection() {
+		//given
+		CollectionManager manager = new CollectionManager(new DaoDBImpl());
+		Verb verb1 = new Verb("take", "took", "taken", "brać", false);
+		Verb verb2 = new Verb("ring", "rang", "rung", "dzwonić", false);
+		
+		manager.addVerbToMainCollection(verb1);
+		manager.addVerbToMainCollection(verb2);
+
+		//when
+		boolean wasRemoved = manager.removeVerbFromMainCollection(verb1);
+		
+		//then
+		assertTrue(wasRemoved);
+		assertThat(manager.getMainCollection().getAllVerbsSortedByInfinitive(), not(contains(verb1)));
+		assertThat(manager.getMainCollection().getAllVerbsSortedByInfinitive(), hasSize(1));
+		
+	}
 }
