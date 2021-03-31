@@ -37,8 +37,6 @@ public class DaoDBImpl implements Dao {
 	String getTableName() {
 		return this.tableName;
 	}
-	
-	
 
 	void openDatabase() {
 		if (conn == null) {
